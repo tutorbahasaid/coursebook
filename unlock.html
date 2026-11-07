@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unlock · Satu Langkah Coursebook</title>
+<meta name="theme-color" content="#6b3f1d">
+<style>
+  :root{
+    --cream:#f8f3e8; --paper:#fffdf7; --brown:#6b3f1d; --brown-dark:#4a2a11;
+    --gold:#c98a3a; --gold-soft:#e8c98f; --green:#5b7f47; --green-soft:#dfead4;
+    --red:#b0413e; --red-soft:#f5dcdb; --ink:#2b1d0e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{font-family:system-ui,-apple-system,sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;-webkit-tap-highlight-color:transparent;}
+  body{display:flex;align-items:center;justify-content:center;padding:20px;}
+
+  .card{
+    background:var(--paper);width:100%;max-width:440px;border-radius:20px;
+    padding:36px 28px;box-shadow:0 20px 40px -20px rgba(74,42,17,.35),0 0 0 1px rgba(107,63,29,.06);
+    text-align:center;position:relative;
+  }
+
+  .logo{
+    font-size:44px;line-height:1;margin-bottom:10px;
+    display:inline-block;animation:float 3s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{transform:translateY(0) rotate(-5deg);}
+    50%{transform:translateY(-6px) rotate(5deg);}
+  }
+
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  h1{font-family:Georgia,serif;font-size:26px;line-height:1.2;color:var(--brown-dark);margin-bottom:8px;}
+  .lead{font-size:14px;color:#5b4a33;line-height:1.5;margin-bottom:24px;}
+
+  .lock-badge{
+    width:64px;height:64px;border-radius:50%;
+    background:linear-gradient(135deg,var(--brown),var(--brown-dark));
+    display:flex;align-items:center;justify-content:center;
+    font-size:28px;margin:0 auto 16px;
+    box-shadow:0 8px 20px -8px rgba(74,42,17,.5);
+  }
+
+  .form-group{text-align:left;margin-bottom:16px;}
+  label{display:block;font-size:12px;font-weight:600;color:var(--brown);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;}
+  .input-wrap{position:relative;}
+  input[type="text"]{
+    width:100%;padding:16px 16px;padding-right:50px;
+    border-radius:12px;border:2px solid #e8dfcd;background:#fff;
+    font-family:'SF Mono','Monaco','Consolas',monospace;
+    font-size:16px;letter-spacing:1px;color:var(--ink);
+    text-align:center;outline:none;transition:all .15s;
+  }
+  input[type="text"]:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,138,58,.15);}
+  input[type="text"]:disabled{opacity:.6;cursor:not-allowed;}
+  input[type="text"].error{border-color:var(--red);animation:shake .4s;}
+  input[type="text"].success{border-color:var(--green);}
+
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-6px);}
+    75%{transform:translateX(6px);}
+  }
+
+  .input-icon{
+    position:absolute;right:14px;top:50%;transform:translateY(-50%);
+    font-size:20px;pointer-events:none;transition:opacity .2s;
+  }
+
+  .btn{
+    width:100%;padding:16px;border-radius:12px;border:none;
+    font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;
+    transition:all .15s ease;display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .btn:hover:not(:disabled){transform:translateY(-1px);}
+  .btn:disabled{opacity:.55;cursor:not-allowed;transform:none;}
+  .btn-primary{
+    background:linear-gradient(135deg,var(--brown),var(--brown-dark));color:#fff;
+    box-shadow:0 4px 12px -4px rgba(74,42,17,.5);
+  }
+  .btn-primary:hover:not(:disabled){box-shadow:0 6px 20px -6px rgba(74,42,17,.6);}
+  .btn-spinner{
+    display:inline-block;width:16px;height:16px;
+    border:2px solid rgba(255,255,255,.3);border-top-color:#fff;
+    border-radius:50%;animation:spin .8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .feedback{
+    padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.5;
+    margin-top:12px;display:none;
+  }
+  .feedback.show{display:block;animation:fadeIn .2s;}
+  .feedback.error{background:var(--red-soft);color:#7a2a28;border-left:3px solid var(--red);}
+  .feedback.success{background:var(--green-soft);color:#3a5a2c;border-left:3px solid var(--green);}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+
+  .divider{
+    display:flex;align-items:center;gap:12px;margin:24px 0 18px;
+    color:#a99a7d;font-size:11px;text-transform:uppercase;letter-spacing:.1em;
+  }
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:#e8dfcd;}
+
+  .link-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 18px;border-radius:10px;
+    background:#fff;border:1.5px solid #e8dfcd;
+    color:var(--brown);font-family:inherit;font-size:14px;
+    font-weight:600;text-decoration:none;transition:all .15s;cursor:pointer;
+  }
+  .link-btn:hover{border-color:var(--gold);transform:translateY(-1px);}
+
+  .footer{
+    margin-top:24px;padding-top:18px;border-top:1px solid #e8dfcd;
+    font-size:12px;color:#8a7a5c;line-height:1.5;
+  }
+  .footer a{color:var(--brown);font-weight:600;text-decoration:none;border-bottom:1px dotted var(--gold);}
+  .footer a:hover{color:var(--gold);}
+
+  .help{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:12px;font-size:12px;color:#8a7a5c;
+  }
+  .help a{color:var(--green);font-weight:600;text-decoration:none;border-bottom:1px dotted var(--green);}
+
+  @media (max-width: 420px){
+    .card{padding:28px 20px;border-radius:16px;}
+    .logo{font-size:36px;}
+    h1{font-size:22px;}
+    .lead{font-size:13px;margin-bottom:20px;}
+    input[type="text"]{font-size:15px;padding:14px;padding-right:44px;}
+    .btn{padding:14px;font-size:14px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">🐝</div>
+  <div class="eyebrow">Satu Langkah · Coursebook</div>
+  <h1>Unlock Full Access</h1>
+  <p class="lead">Enter the access code you received after purchase to open all 5 chapters.</p>
+
+  <div class="lock-badge">🔒</div>
+
+  <form id="unlock-form" novalidate>
+    <div class="form-group">
+      <label for="code-input">Access Code</label>
+      <div class="input-wrap">
+        <input
+          type="text"
+          id="code-input"
+          placeholder="SALAM-2026-XXXX"
+          maxlength="20"
+          autocomplete="off"
+          autocapitalize="characters"
+          spellcheck="false"
+          inputmode="text"
+        >
+        <span class="input-icon" id="input-icon"></span>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="unlock-btn" disabled>
+      <span id="btn-text">Unlock Coursebook</span>
+    </button>
+
+    <div class="feedback" id="feedback"></div>
+  </form>
+
+  <div class="divider">or</div>
+
+  <a
+    href="https://wa.me/6285117111763?text=Hai%2C%20saya%20belum%20punya%20kode%20akses%20coursebook%20Satu%20Langkah.%20Bisa%20dibantu%3F"
+    target="_blank"
+    rel="noopener"
+    class="link-btn"
+  >
+    💬 Buy or ask via WhatsApp
+  </a>
+
+  <div class="footer">
+    Don't have a code yet?<br>
+    <a href="index.html">← Back to free preview</a>
+  </div>
+
+  <div class="help">
+    🔑 Forgot your code?
+    <a href="https://wa.me/6285117111763?text=Hai%2C%20saya%20lupa%20kode%20akses%20coursebook%20Satu%20Langkah." target="_blank" rel="noopener">Contact us →</a>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  const form = document.getElementById('unlock-form');
+  const input = document.getElementById('code-input');
+  const btn = document.getElementById('unlock-btn');
+  const btnText = document.getElementById('btn-text');
+  const feedback = document.getElementById('feedback');
+  const inputIcon = document.getElementById('input-icon');
+
+  let isSubmitting = false;
+
+  // Auto-format input: uppercase + auto-insert hyphens
+  input.addEventListener('input', () => {
+    let val = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+
+    // Auto-insert hyphens: SALAM-YYYY-XXXX
+    if (val.length > 5 && val.length <= 9) {
+      val = val.slice(0, 5) + '-' + val.slice(5);
+    } else if (val.length > 9) {
+      val = val.slice(0, 5) + '-' + val.slice(5, 9) + '-' + val.slice(9, 13);
+    }
+
+    input.value = val;
+    input.classList.remove('error', 'success');
+    hideFeedback();
+
+    // Enable button when format looks valid
+    btn.disabled = val.length < 13 || isSubmitting;
+
+    // Update icon
+    inputIcon.textContent = val.length >= 13 ? '' : '';
+  });
+
+  // Submit
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    const raw = input.value;
+    if (!raw) {
+      showError('Please enter your access code.');
+      return;
+    }
+
+    isSubmitting = true;
+    btn.disabled = true;
+    btnText.innerHTML = '<span class="btn-spinner"></span> Verifying...';
+    hideFeedback();
+    input.classList.remove('error', 'success');
+
+    try {
+      const result = await SLAuth.validateCode(raw);
+
+      if (result.ok) {
+        // Success — save session, show success, redirect
+        SLAuth.saveSession(result.code, result.name);
+        input.classList.add('success');
+        showSuccess(`Welcome${result.name ? ', ' + result.name : ''}! Unlocking...`);
+        btnText.textContent = '✓ Access Granted';
+
+        setTimeout(() => {
+          window.location.href = 'app.html';
+        }, 800);
+      } else {
+        // Failure — show error
+        input.classList.add('error');
+        showError(result.message);
+        isSubmitting = false;
+        btn.disabled = input.value.length < 13;
+        btnText.textContent = 'Unlock Coursebook';
+
+        // Focus back on input
+        setTimeout(() => input.focus(), 100);
+      }
+    } catch (err) {
+      console.error(err);
+      showError('Something went wrong. Please try again.');
+      isSubmitting = false;
+      btn.disabled = false;
+      btnText.textContent = 'Unlock Coursebook';
+    }
+  });
+
+  function showError(msg) {
+    feedback.className = 'feedback error show';
+    feedback.textContent = '❌ ' + msg;
+  }
+
+  function showSuccess(msg) {
+    feedback.className = 'feedback success show';
+    feedback.textContent = '✅ ' + msg;
+  }
+
+  function hideFeedback() {
+    feedback.classList.remove('show');
+  }
+
+  // On load: check if already authorized → auto redirect
+  (async function init() {
+    const session = SLAuth.getSession();
+    if (!session) return;
+
+    try {
+      const result = await SLAuth.validateCode(session.code);
+      if (result.ok) {
+        showSuccess('Already unlocked! Redirecting...');
+        setTimeout(() => {
+          window.location.href = 'app.html';
+        }, 500);
+      } else {
+        SLAuth.clearSession();
+      }
+    } catch (e) {
+      // Network fail — let user stay on page
+    }
+  })();
+
+  // Auto-focus input on load
+  setTimeout(() => input.focus(), 200);
+})();
+</script>
+</body>
+</html>

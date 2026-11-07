@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coursebook · Satu Langkah</title>
+<style>
+  :root{--cream:#f8f3e8;--paper:#fffdf7;--brown:#6b3f1d;--brown-dark:#4a2a11;--gold:#c98a3a;--green:#5b7f47;--green-soft:#dfead4;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:system-ui,sans-serif;background:var(--cream);color:#2b1d0e;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .container{max-width:560px;width:100%;background:var(--paper);border-radius:20px;padding:40px 28px;text-align:center;box-shadow:0 20px 40px -20px rgba(74,42,17,.35);}
+  h1{font-family:Georgia,serif;font-size:28px;color:var(--brown-dark);margin-bottom:10px;}
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .badge{display:inline-block;background:var(--green-soft);color:var(--green);padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;margin-bottom:20px;}
+  p{font-size:14px;color:#5b4a33;line-height:1.6;margin-bottom:20px;}
+  .logout{display:inline-block;padding:12px 20px;border-radius:10px;background:#fff;border:1.5px solid #e8dfcd;color:var(--brown);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .15s;}
+  .logout:hover{border-color:var(--gold);}
+  .footer{margin-top:30px;padding-top:20px;border-top:1px solid #e8dfcd;font-size:11px;color:#8a7a5c;}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="eyebrow">Satu Langkah · Coursebook</div>
+  <h1>🐝 Welcome!</h1>
+  <div class="badge">✓ Authenticated</div>
+
+  <p>
+    Hi <strong id="user-name">User</strong>!<br>
+    Chapter 2–5 will appear here once the coursebook is built.<br>
+    <span style="font-size:12px;color:#a99a7d;font-style:italic;">(This is a placeholder — content coming soon)</span>
+  </p>
+
+  <button class="logout" id="btn-logout">← Logout</button>
+
+  <div class="footer">
+    Licensed to <span id="footer-name">User</span> · <span id="footer-code">—</span><br>
+    © 2026 Tutor Bahasa · Satu Langkah
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+(async function () {
+  const session = await SLAuth.requireAuth('unlock.html');
+  if (!session) return;
+
+  document.getElementById('user-name').textContent = session.name || 'Learner';
+  document.getElementById('footer-name').textContent = session.name || 'Learner';
+  document.getElementById('footer-code').textContent = session.code;
+
+  document.getElementById('btn-logout').onclick = () => {
+    if (confirm('Log out from this device?\nYou will need your code again to access the coursebook.')) {
+      SLAuth.clearSession();
+      window.location.href = 'unlock.html';
+    }
+  };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "_README": "Access codes for Satu Langkah coursebook. Add new codes as objects. Set 'active' to false to revoke access. Remove test codes (SALAM-2026-TEST, SALAM-2026-DEMO) before launch.",
+
+  "SALAM-2026-TEST": {
+    "name": "Test User",
+    "email": "test@example.com",
+    "date_paid": "2026-01-01",
+    "active": true,
+    "notes": "⚠️ DUMMY CODE — remove before launch"
+  },
+
+  "SALAM-2026-DEMO": {
+    "name": "Demo User",
+    "email": "demo@example.com",
+    "date_paid": "2026-01-01",
+    "active": true,
+    "notes": "⚠️ DUMMY CODE — remove before launch"
+  },
+
+  "SALAM-2026-REVOKED": {
+    "name": "Refunded User",
+    "email": "refund@example.com",
+    "date_paid": "2026-01-01",
+    "active": false,
+    "notes": "⚠️ Test inactive code — should be rejected"
+  }
+}
